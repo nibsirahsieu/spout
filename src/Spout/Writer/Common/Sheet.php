@@ -33,6 +33,8 @@ class Sheet
     /** @var string Name of the sheet */
     protected $name;
 
+    protected $mergeCells;
+
     /** @var \Box\Spout\Common\Helper\StringHelper */
     protected $stringHelper;
 
@@ -42,6 +44,7 @@ class Sheet
      */
     public function __construct($sheetIndex, $associatedWorkbookId)
     {
+        $this->mergeCells = [];
         $this->index = $sheetIndex;
         $this->associatedWorkbookId = $associatedWorkbookId;
         if (!isset(self::$SHEETS_NAME_USED[$associatedWorkbookId])) {
@@ -88,6 +91,18 @@ class Sheet
 
         $this->name = $name;
         self::$SHEETS_NAME_USED[$this->associatedWorkbookId][$this->index] = $name;
+
+        return $this;
+    }
+
+    public function getMergeCells()
+    {
+        return $this->mergeCells;
+    }
+
+    public function setMergeCells($mergedCells)
+    {
+        $this->mergeCells = $mergedCells;
 
         return $this;
     }

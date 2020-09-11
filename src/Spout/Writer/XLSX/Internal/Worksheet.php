@@ -269,6 +269,18 @@ EOD;
         }
 
         fwrite($this->sheetFilePointer, '</sheetData>');
+
+        $mergeCells = $this->getExternalSheet()->getMergeCells();
+        if (!empty($mergeCells)) {
+            $startLine = '<mergeCells count="1">';
+            $rangeLine = '';
+            foreach ($mergeCells as $key => $range) {
+                $rangeLine .= '<mergeCell ref="' . $range . '"/>';
+            }
+            $endLine = '</mergeCells>';
+            fwrite($this->sheetFilePointer, $startLine.$rangeLine.$endLine);
+        }
+
         fwrite($this->sheetFilePointer, '</worksheet>');
         fclose($this->sheetFilePointer);
     }
