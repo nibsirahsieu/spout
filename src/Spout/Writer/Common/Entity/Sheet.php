@@ -21,6 +21,8 @@ class Sheet
     /** @var string Name of the sheet */
     private $name;
 
+    private $mergeCells;
+
     /** @var bool Visibility of the sheet */
     private $isVisible;
 
@@ -34,6 +36,7 @@ class Sheet
      */
     public function __construct($sheetIndex, $associatedWorkbookId, SheetManager $sheetManager)
     {
+        $this->mergeCells = [];
         $this->index = $sheetIndex;
         $this->associatedWorkbookId = $associatedWorkbookId;
 
@@ -66,6 +69,18 @@ class Sheet
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getMergeCells()
+    {
+        return $this->mergeCells;
+    }
+
+    public function setMergeCells($mergedCells)
+    {
+        $this->mergeCells = $mergedCells;
+
+        return $this;
     }
 
     /**

@@ -271,6 +271,18 @@ EOD;
         }
 
         \fwrite($worksheetFilePointer, '</sheetData>');
+
+        $mergeCells = $worksheet->getExternalSheet()->getMergeCells();
+        if (!empty($mergeCells)) {
+            $startLine = '<mergeCells count="1">';
+            $rangeLine = '';
+            foreach ($mergeCells as $key => $range) {
+                $rangeLine .= '<mergeCell ref="' . $range . '"/>';
+            }
+            $endLine = '</mergeCells>';
+            fwrite($worksheetFilePointer, $startLine.$rangeLine.$endLine);
+        }
+
         \fwrite($worksheetFilePointer, '</worksheet>');
         \fclose($worksheetFilePointer);
     }
